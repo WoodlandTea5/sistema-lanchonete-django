@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cardápio da Lanchonete</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+
+    <style>
+      body {
+        background-color: #f8f9fa; /* Fundo cinza bem claro */
+      }
+      .card-produto {
+        transition: transform 0.2s;
+      }
+      .card-produto:hover {
+        transform: scale(1.02); /* Leve zoom ao passar o mouse */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .preco-destaque {
+        color: #198754; /* Verde sucesso do Bootstrap */
+        font-weight: bold;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="#">🍔 Minha Lanchonete</a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="text-center mb-5">
+        <h1 class="display-4">Nosso Cardápio</h1>
+        <p class="lead text-muted">Confira nossas opções deliciosas!</p>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for item in produtos %}
+        <div class="col">
+          <div class="card h-100 card-produto border-0 shadow-sm">
+            {% if item.imagem %}
+            <img
+              src="{{ item.imagem.url }}"
+              class="card-img-top"
+              alt="{{ item.nome }}"
+              style="height: 200px; object-fit: cover"
+            />
+            {% else %}
+            <div
+              class="card-img-top bg-secondary text-white d-flex justify-content-center align-items-center"
+              style="height: 200px"
+            >
+              <span>Sem Foto</span>
+            </div>
+            {% endif %}
+
+            <div class="card-header bg-warning bg-opacity-10 border-0">
+              <small class="text-muted">{{ item.categoria }}</small>
+            </div>
+
+            <div class="card-body">
+              <h5 class="card-title">{{ item.nome }}</h5>
+              <p class="card-text text-muted">
+                {{ item.descricao|default:"Sem descrição detalhada." }}
+              </p>
+            </div>
+
+            <div class="card-footer bg-white border-0 pb-3">
+              <div
+                class="d-flex justify-content-between align-items-center mb-2"
+              >
+                <span class="preco-destaque">R$ {{ item.preco }}</span>
+              </div>
+
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <a
+                  href="{% url 'produto_editar' item.id %}"
+                  class="btn btn-outline-warning btn-sm"
+                >
+                  Editar
+                </a>
+                <a
+                  href="{% url 'produto_excluir' item.id %}"
+                  class="btn btn-outline-danger btn-sm"
+                >
+                  Excluir
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+          <div class="alert alert-info">
+            Nenhum produto disponível no momento. Volte em breve!
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <br />
+
+      <div class="text-center mb-4">
+        <a href="{% url 'produto_novo' %}" class="btn btn-success btn-lg">
+          <i class="bi bi-plus-circle"></i> Cadastrar Novo Produto
+        </a>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
