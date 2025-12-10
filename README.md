@@ -1,4 +1,4 @@
-# 🍔 Lanchonete Manager (Sistema Web Django)
+# 🍔 Sistema Web de Lanchonete Django
 
 Sistema completo de gestão de cardápio e produtos para lanchonetes, desenvolvido como **Projeto Prático Integrador**.
 
@@ -105,3 +105,4 @@ O sistema resolve o problema da atualização de preços e cardápios físicos, 
     }
   ]
   ```
+
